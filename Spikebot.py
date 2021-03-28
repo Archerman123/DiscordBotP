@@ -6,6 +6,7 @@ import os
 import wheelsMaker
 import stringManipTools as strManip
 import rules
+from keep_alive import keep_alive
 
 class Spike():
 
@@ -46,7 +47,7 @@ class Spike():
     toSend += "- help: shows the list of available com-... wait...\n"
     toSend += "- roll: allow to roll dices. support multiple dices and modifiers \n"
     toSend += "- boss: a mini-game all about coordination without comunicating your intentions! (W.I.P)\n"
-    toSend += "- wheel: make a list of words and randomly pick one of them, like your own mini wheel of fortune. type " + self.botCaller + "wheel help for more info"
+    toSend += "- wheel: make a list of words and randomly pick one of them, like your own mini wheel of fortune. type " + self.botCaller + "wheel help for more info \n"
     toSend += "- rules: Show the specified rule of the server"
     return toSend
 
@@ -197,6 +198,10 @@ class Spike():
         await message.channel.send(toSend)
       else:
         print("Error: No message was prepared, please recheck the code")
+
+
+
+    keep_alive()
     self.client.run(os.getenv('TOKEN2'))  
 
  
