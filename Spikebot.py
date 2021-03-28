@@ -51,7 +51,9 @@ class Spike():
   def bossCmd(self,message):
     print("Calling the boss!")
     command = self.commandParser(message)
+    #print(command)
     nbrCmd = len(command)
+    #print(nbrCmd)
     helpMessage = "This is a work in progress boss fight mini game. Available commands:"
     helpMessage += "\n - !boss join [character name] (register a character to join in the fight)"
     helpMessage += "\n - !boss [character] \|\|attack\|\| (attack the boss with the specified character)"
@@ -89,7 +91,7 @@ class Spike():
             return str(command[2]) + " was registered successfully"
         else: 
           return "Error: no character name specified"
-      elif nbrCmd > 3:
+      elif nbrCmd > 2:
         if command[2] == '||attack||' or command[2] == 'attack':
           return self.boss.canAttack(command[1])
       else:
