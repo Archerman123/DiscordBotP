@@ -1,1 +1,9 @@
-!rule command (Winter)
+!rule command: (idea by winterWinter)
+- make it a json
+- make it server specific
+
+!boss: 
+- remake player/status list
+- boss attack mechanic
+- healing mechanic
+- custom boss name

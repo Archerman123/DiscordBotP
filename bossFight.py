@@ -60,13 +60,13 @@ class Boss():
   def status(self):
     print(str(self.currentHP) + '/' + str(self.maxHP))
     toSend = "The following players have taken action: " + str(self.spentPlayers)
-    toSend += "\n The following players are downed, consider healing them: " + str(self.downedPlayers)
+    toSend += "\nThe following players are downed, consider healing them: " + str(self.downedPlayers)
     if self.currentHP < self.maxHP/2:
-      toSend += "\n The boss looks like they are getting tired"
+      toSend += "\nThe boss looks like they are getting tired"
     elif self.currentHP < 1:
-      toSend += "\n The boss has fallen! congrats!"
+      toSend += "\nThe boss has fallen! congrats!"
     else:
-      toSend += "\n The boss looks like they are still very healthy"
+      toSend += "\nThe boss looks like they are still very healthy"
     return toSend
 
   def setHP(self,hp):

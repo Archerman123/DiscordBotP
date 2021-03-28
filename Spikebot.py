@@ -5,6 +5,7 @@ import discord
 import os
 import wheelsMaker
 import stringManipTools as strManip
+import rules
 
 class Spike():
 
@@ -46,6 +47,7 @@ class Spike():
     toSend += "- roll: allow to roll dices. support multiple dices and modifiers \n"
     toSend += "- boss: a mini-game all about coordination without comunicating your intentions! (W.I.P)\n"
     toSend += "- wheel: make a list of words and randomly pick one of them, like your own mini wheel of fortune. type " + self.botCaller + "wheel help for more info"
+    toSend += "- rules: Show the specified rule of the server"
     return toSend
 
   def bossCmd(self,message):
@@ -137,6 +139,22 @@ class Spike():
     else:
       return 'Error: message was "' + message + '" and is not a valid input. please do "!wheel help" for more details.'
 
+  def rulesCmd(self, message):
+    command = self.commandParser(message)
+    self.rules = rules.rulesList()
+    nbrCmd = len(command)
+    #print(ruleNumber)
+    if nbrCmd > 1:
+      ruleNumber = command[1]
+      description = self.rules.getRule(ruleNumber)
+      if description.startswith("Error:"):
+        return description
+      else:
+        return "Rule " + ruleNumber + ": " + description
+    else:
+      return "Use !rules [rule number] too show a specific rule of the server"
+
+
   def __init__(self):
     self.wheelM = wheelsMaker.wheelMaker()
     self.botCaller = '!'
@@ -170,6 +188,8 @@ class Spike():
         toSend = self.help()
       elif message.content.startswith(self.botCaller + 'wheel'):
         toSend = self.wheelCmd(message.content)
+      elif message.content.startswith(self.botCaller + 'rules'):
+        toSend = self.rulesCmd(message.content)
       else:
         toSend = self.wrongCommand 
 
