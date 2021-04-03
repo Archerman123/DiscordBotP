@@ -1,4 +1,4 @@
-!rule command: (idea by winterWinter)
+!rule command: (idea by Winter)
 - make it a json
 - make it server specific
 

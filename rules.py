@@ -19,6 +19,31 @@ class rulesList():
     self.rules.append(rule(63, "For every given male character, there is a female version of that character; conversely for every given female character, there is a male version of that character."))
     self.rules.append(rule(66, "Eliminate all jedis"))
 
+    self.rules.append(rule("r1", "Respect your fellow players. If there's an active roleplay going on in the channel, don't just invite yourself! Ask out-of-character first if you can join in."))
+
+    self.rules.append(rule("r2", "No gore play please. If that's your thing, we don't kink shame you here, but please keep it in DM's"))
+
+    self.rules.append(rule("r3", "Don't ping someone unless you absolutely have to! Nobody likes getting pinged for no reason."))
+
+    self.rules.append(rule("r4", "Keep out-of-character chatting outside the channel, please!"))
+
+    self.rules.append(rule("r5", "Violating these rules is considered grounds for revocation of channel access. READ THE RULES, PLEASE! IGNORANCE IS NO EXCUSE!"))
+
+    self.rules.append(rule("r6", "If you are rp-ing in a room and want to change to a different one, say it on the other channel so that other people can join you if they wish to!"))
+
+    self.rules.append(rule("r7", "Remember this is ero-rp, anyone with the “under-18” role will not have acess to the roleplay area, if someone does, please report me and I’ll remove the role from the user, this is to not get our server closed, lol."))
+
+    self.rules.append(rule("r8", "Use of magic and fantasy  technology is restricted to benign or sexual purposes. This is an ero-rp, not a test of power level."))
+
+    self.rules.append(rule("r10", "If a player has not interacted in 24hrs it is assumed they left"))
+
+    self.rules.append(rule("r11", "Do not disrespect your fellow players by abandoning the roleplay through unannounced AFK's.\n\n Doing so will result in moderator intervention to remove your character from the situation and an evaluation of the frequency in which you have engaged in this disrespectful behavior."))
+
+    self.rules.append(rule("r12", "The Abandoned Factory is a rule free zone intended for doing things that would be outside the law, with three key exceptions. No death, no gore, and no forcing people to go there.\n\n If you voluntarily travel to this location, you accept that something bad might happen"))
+
+    
+
+    
   def getRule(self,number):
     for rule in self.rules:
       #print(str(rule.getNumber()) + ": " + rule.getDesc())

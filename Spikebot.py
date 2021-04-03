@@ -153,7 +153,7 @@ class Spike():
       else:
         return "Rule " + ruleNumber + ": " + description
     else:
-      return "Use !rules [rule number] too show a specific rule of the server"
+      return "Use !rules [rule number] too show a specific rule of the server\n\nAdd an 'r' before the number to get the roleplay rules\nExemple: " + self.botCaller + "rules r1"
 
 
   def __init__(self):
