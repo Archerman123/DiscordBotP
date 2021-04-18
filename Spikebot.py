@@ -7,6 +7,7 @@ import wheelsMaker
 import stringManipTools as strManip
 import rules
 from keep_alive import keep_alive
+import oc
 
 class Spike():
 
@@ -47,6 +48,7 @@ class Spike():
     toSend += "- help: shows the list of available com-... wait...\n"
     toSend += "- roll: allow to roll dices. support multiple dices and modifiers \n"
     toSend += "- boss: a mini-game all about coordination without comunicating your intentions! (W.I.P)\n"
+    toSend += "- oc: Tired of sifting trough the #oc-info-channel  to find a char description? Now you can put the first name of a char and get a direct link to their info page! (if they added their page to the list first)\n"
     toSend += "- wheel: make a list of words and randomly pick one of them, like your own mini wheel of fortune. type " + self.botCaller + "wheel help for more info \n"
     toSend += "- rules: Show the specified rule of the server"
     return toSend
@@ -155,6 +157,28 @@ class Spike():
     else:
       return "Use !rules [rule number] too show a specific rule of the server\n\nAdd an 'r' before the number to get the roleplay rules\nExemple: " + self.botCaller + "rules r1"
 
+  def ocCmd(self, message):
+    command = self.commandParser(message)
+    self.rules = rules.rulesList()
+    nbrCmd = len(command)
+    helpMsg = "- " + self.botCaller +"oc [OC first name] (return the discord link of a character description sheet) \n"
+    helpMsg = helpMsg + "- " + self.botCaller +"oc add [OC first name] [discord link] (Add your oc to the list so people can find them easily)"
+    nameList = self.ocBox.getList()
+    
+
+    if nbrCmd == 2:
+      if command[1] == "help":
+        return helpMsg
+      else:
+        if command[1] == "list":
+          return nameList
+        elif command[1] in nameList:
+          return self.ocBox.getOC(command[1])
+        return "Name not found, try " + self.botCaller+ "oc list"
+    if nbrCmd == 4: 
+      if command[1] == "add":
+        self.ocBox.addOC(command[2], command[3])
+        return "successfully added "+ command[2] + " to the list"
 
   def __init__(self):
     self.wheelM = wheelsMaker.wheelMaker()
@@ -171,6 +195,7 @@ class Spike():
     @self.client.event
     async def on_ready():
       print('{0.user} is here to assist!'.format(self.client))
+    self.ocBox = oc.ocStorage()
     
     @self.client.event
     async def on_message(message):
@@ -191,6 +216,8 @@ class Spike():
         toSend = self.wheelCmd(message.content)
       elif message.content.startswith(self.botCaller + 'rules'):
         toSend = self.rulesCmd(message.content)
+      elif message.content.startswith(self.botCaller + 'oc'):
+        toSend = self.ocCmd(message.content)
       else:
         toSend = self.wrongCommand 
 

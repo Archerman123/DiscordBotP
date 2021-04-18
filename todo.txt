@@ -7,3 +7,6 @@
 - boss attack mechanic
 - healing mechanic
 - custom boss name
+
+!oc:
+- allow the deletion of names, might need to recognise a role for it first
