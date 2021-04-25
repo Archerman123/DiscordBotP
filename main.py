@@ -7,8 +7,5 @@ import Spikebot
 #Spikebot.
 #Drakebot.Drake()
      
-
-
-
 Spikebot.Spike()
 #Drakebot.Drake()  

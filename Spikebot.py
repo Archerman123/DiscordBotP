@@ -104,52 +104,58 @@ class Spike():
     else:
       return helpMessage
 
-  def wheelCmd(self,message):
+  def wheelCmd(self,message,server):
+    self.wheels = self.wheelM.getWheels(server)
+    self.wheelNames = []
+    for w in self.wheels:
+        self.wheelNames.append(w.getName())
     command = self.commandParser(message)
     nbrCmd = len(command)
     helpMessage = "Spin the wheel and get a random result! Current options:\n !wheel list (return the list of the currently available wheels) \n- !wheel [name of the wheel] (spin the wheel) \n - !wheel [name of the wheel] list (returns the content of the wheel) \n - !wheel [name of the wheel] add [word] (adds the word to wheel. Warning, any additions to the wheel will be lost on bot reload. will be fixed later) \n - !wheel [name of the wheel] remove [word] (Remove a option from the wheel) \n Note: Please replace any spaces by the character '-', exemple: Seven-Jefferson"
+
     if nbrCmd == 1:
       return helpMessage
     elif command[1] == "help":
       return helpMessage
     elif command[1] in self.wheelNames:
       position = self.wheelNames.index(command[1])
-      wheel = self.wheels[position]
+      aWheel = self.wheels[position]
       if nbrCmd > 2:
         if command[2] == "list":
-          return "The wheel contains: " + str(wheel.getContent())
+          return "The wheel contains: " + str(aWheel.getContent())
         elif command[2] == "add":
           if nbrCmd > 3:
-            wheel.addContent(command[3])
+            aWheel.addContent(command[3])
             try:
-              self.wheelM.updateWheel(wheel)
+              self.wheelM.updateWheel(aWheel,server)
             except:
               return "Error: There was a problem when trying to save the change" 
             return command[3] + " was added to the wheel successfully"
           else:
              return 'Error: message was "' + message + '" and is not a valid input. please do "!wheel help" for more details.'
         elif command[2] == "remove":
-          toSend = wheel.removeContent(command[3])
+          toSend = aWheel.removeContent(command[3])
           try:
-            self.wheelM.updateWheel(wheel)
+            self.wheelM.updateWheel(aWheel,server)
           except:
             return "Error: There was a problem when trying to save the change" 
           return toSend
       else:
-        return wheel.spin()
+        return aWheel.spin()
     elif command[1] == "list":
       return "The available wheels are: " + str(self.wheelNames)
     else:
       return 'Error: message was "' + message + '" and is not a valid input. please do "!wheel help" for more details.'
 
-  def rulesCmd(self, message):
+  def rulesCmd(self, message,server):
     command = self.commandParser(message)
     self.rules = rules.rulesList()
     nbrCmd = len(command)
+    #self.rules.addRule(0,server)
     #print(ruleNumber)
     if nbrCmd > 1:
       ruleNumber = command[1]
-      description = self.rules.getRule(ruleNumber)
+      description = self.rules.getRule(ruleNumber,server)
       if description.startswith("Error:"):
         return description
       else:
@@ -177,20 +183,19 @@ class Spike():
         return "Name not found, try " + self.botCaller+ "oc list"
     if nbrCmd == 4: 
       if command[1] == "add":
-        self.ocBox.addOC(command[2], command[3])
-        return "successfully added "+ command[2] + " to the list"
+        if command[3].startswith("https://discord.com/channels/"):
+          self.ocBox.addOC(command[2], command[3])
+          return "successfully added "+ command[2] + " to the list"
+        else:
+          return "Last argument must contain a discord link. Ex: " + self.botCaller + "oc add [Oc name] [https: //discord.com/channels/...]"
+
+    return self.wrongCommand
 
   def __init__(self):
     self.wheelM = wheelsMaker.wheelMaker()
     self.botCaller = '!'
     self.client = discord.Client()
     self.boss = bossF.Boss()
-    self.charWheel = wheel.wheel('chars',['Seven','Ninia','Vikki'])
-    self.wheels = self.wheelM.getWheels()
-    self.wheelNames = []
-    for w in self.wheels:
-        self.wheelNames.append(w.getName())
-    self.charWheel = self.wheels[0]
     self.wrongCommand = "The command was miswritten or does not exist. try typing " + self.botCaller + "help"
     @self.client.event
     async def on_ready():
@@ -204,6 +209,8 @@ class Spike():
         return
       if not message.content.startswith(self.botCaller):
         return
+      
+      server = message.guild
 
       if message.content.startswith(self.botCaller + 'roll'):
         toSend = self.diceRolls(message.content)
@@ -213,9 +220,9 @@ class Spike():
       elif message.content.startswith(self.botCaller + 'help'):
         toSend = self.help()
       elif message.content.startswith(self.botCaller + 'wheel'):
-        toSend = self.wheelCmd(message.content)
+        toSend = self.wheelCmd(message.content,server)
       elif message.content.startswith(self.botCaller + 'rules'):
-        toSend = self.rulesCmd(message.content)
+        toSend = self.rulesCmd(message.content,server)
       elif message.content.startswith(self.botCaller + 'oc'):
         toSend = self.ocCmd(message.content)
       else:

@@ -1,6 +1,5 @@
-!rule command: (idea by Winter)
-- make it a json
-- make it server specific
+!rules command: (idea by Winter)
+- add a option to add rules, or at least automatically generate a entry for the server
 
 !boss: 
 - remake player/status list
@@ -10,3 +9,10 @@
 
 !oc:
 - allow the deletion of names, might need to recognise a role for it first
+- make server specific like !rules
+
+!wheel:
+- copy !rules and make server specific
+
+JsonReader:
+- When the writing fail, make it reload the last data and throw and error instead of voiding the entire document

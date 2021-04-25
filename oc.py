@@ -20,3 +20,5 @@ class ocStorage():
     self.storage.writeData(self.links)
     self.loadData()
 
+    
+
