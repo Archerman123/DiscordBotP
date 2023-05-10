@@ -12,7 +12,7 @@ def roll(sides):
     """ Roll a (sides) sided die and return the value. 1 <= N <= sides """
     return random.randint(1,sides)
 
-def parse_dice(cmd):
+def parse_dice(cmd,request):
   """ Parse strings like "2d6" or "1d20" or "5d103+5" and roll accordingly """
   pattern2 = re.compile(r'(?P<count>\d+)?d(?P<sides>\d+)(?P<mod>[\+\-]\d+)?')
   match2 = re.match(pattern2, cmd)
@@ -31,7 +31,25 @@ def parse_dice(cmd):
   except:
     mod = 0
 
-  if count > 1:
-    return [ roll(sides)+ mod for i in range(count) ]
+  if request == "result":
+    if count > 1:
+      return [ roll(sides) for i in range(count) ]
+    else:
+      return roll(sides)
+
+  if request == "mod":
+    return mod
+
+def roll_dice(cmd):
+  results = parse_dice(cmd,"result")
+  mod = parse_dice(cmd,"mod")
+  if not isinstance(results, str):
+    if isinstance(results, list):
+      total = 0 + mod
+      for nb in results:
+        total += nb
+    else:
+      total = results + mod
+    return "The total is: " + str(total) + "\n" + "Rolls: " + str(results)
   else:
-    return roll(sides)
+    return results

@@ -5,28 +5,23 @@ class wheelMaker():
   def __init__(self):
     self.servers = {}
     self.storage = JsonReader.reader("storageFile/wheelStorage.json")
-
     self.loadData()
-
-    self.wheels = []
-    for server in self.content:
-      self.servers[server] = self.content[server]
 
   def loadData(self):
     self.content = self.storage.getData()
+    for server in self.content:
+      self.servers[server] = self.content[server]
+      
 
   def getWheels(self,server):
     server = str(server)
+    toSend = []
     if server not in self.servers:
       self.addServer(server)
       self.loadData()
-
     for w in self.servers[server]:
-      toAdd = []
-      for c in self.servers[server][w]:
-        toAdd.append(c)
-      self.wheels.append(wheel.wheel(w,toAdd))
-    return self.wheels
+      toSend.append(wheel.wheel(w,self.servers[server][w]))
+    return toSend
 
   def updateWheel(self,wheel,server):
     server = str(server)
@@ -36,7 +31,7 @@ class wheelMaker():
 
   def addServer(self,server):
     server = str(server)
-    temp = {"default":[]}
+    temp = {"default":["default"]}
     
     print(temp)
     self.servers[server] = temp

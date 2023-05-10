@@ -1,5 +1,5 @@
 !rules command: (idea by Winter)
-- add a option to add rules, or at least automatically generate a entry for the server
+- add a option to add rules
 
 !boss: 
 - remake player/status list
@@ -11,8 +11,13 @@
 - allow the deletion of names, might need to recognise a role for it first
 - make server specific like !rules
 
-!wheel:
-- copy !rules and make server specific
-
 JsonReader:
-- When the writing fail, make it reload the last data and throw and error instead of voiding the entire document
+- When the writing fail, make it reload the last data and throw an error instead of voiding the entire document
+
+Slash command:
+  global:
+    - make commands that require specific server storage work on other servers
+
+  !oc:
+    - reimplement everything
+  

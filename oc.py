@@ -5,7 +5,7 @@ class ocStorage():
     self.loadData()
 
   def loadData(self):
-    self.storage = JsonReader.reader("ocStorage.json")
+    self.storage = JsonReader.reader("storageFile/ocStorage.json")
     self.links = self.storage.getData()
     self.names = [*self.links]
 

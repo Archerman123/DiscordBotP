@@ -1,11 +1,22 @@
-import Spikebot
+import keep_alive
 
-#import Drakebot
-#import discord
-#import diceRolls
-#import os
-#Spikebot.
+status = "None"
+web = keep_alive.website
+
+choice = "default"
+launched = False
+
+def launch():
+    global launched
+    if not launched:
+        if (choice == "slash"):
+            import SpikebotSlash
+            SpikebotSlash.Spike(web)
+        else:
+            import Spikebot
+            Spikebot.Spike(web)
+    launched = True
+
+launch()
 #Drakebot.Drake()
-     
-Spikebot.Spike()
-#Drakebot.Drake()  
+
